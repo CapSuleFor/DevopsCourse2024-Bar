@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  drupal:
+    image: drupal:latest
+    ports:
+      - "8080:80"
+    networks:
+      - drupal
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=drupal
+
+  postgres:
+    image: postgres:latest
+    networks:
+      - drupal
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=drupal
+
+networks:
+  drupal:
+    driver: bridge
+
